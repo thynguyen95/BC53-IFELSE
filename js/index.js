@@ -102,7 +102,7 @@ document.getElementById("hanldeSalary").onclick = function () {
   }
 
   document.getElementById(
-    "resultSalary"
+    "resultSalary",
   ).innerHTML = `Tổng lương : ${totalSalary}`;
 };
 
@@ -148,9 +148,160 @@ if (age >= 18) {
 // B1: xác định input
 // tên, số lượng , đơn giá, tổng tiền
 
-var name = document.getElementById("name").value;
-var quality = +document.getElementById("quality").value;
-var price = +document.getElementById("price").value;
-var total;
+function hanldeCart() {
+  var name = document.getElementById("name").value;
+  var quality = +document.getElementById("quality").value;
+  var price = +document.getElementById("price").value;
+  var total;
 
-// B2: xử lý
+  // B2: xử lý
+  // lưu ý so sánh khoảng từ a-> b trong js
+  // trong toán học: 50 < x < 100
+  // trong js: x > 50 && x < 100
+  if (quality < 50) {
+    total = quality * price;
+  } else if (quality >= 50 && quality <= 100) {
+    total = 49 * price + (quality - 49) * price * 0.92;
+  } else {
+    // total = (49 * price) + (51 * price * 0.92) + (quality - 100) * price * 0.88;
+    total = 100 * price + (quality - 100) * price * 0.88;
+  }
+
+  document.getElementById("resultCart").innerHTML = total;
+}
+
+// hanldeCart();
+
+document.getElementById("hanldeCart").onclick = hanldeCart;
+
+// Bài tập xếp loại học sinh
+
+document.getElementById("hanldeDiem").onclick = function () {
+  // B1: xác định input
+  // Tên, toán , lý , hóa
+  var hoTen = document.getElementById("hoTen").value;
+  var diemToan = +document.getElementById("toan").value;
+  var diemLy = +document.getElementById("ly").value;
+  var diemHoa = +document.getElementById("hoa").value;
+
+  // B2: xử lý:
+  // 1. tính điểm trung bình.
+  // 2. lấy dtb để đi xếp loại
+
+  var DTB = (diemToan + diemLy + diemHoa) / 3;
+  var xepLoai = document.getElementById("resultXepLoai").innerHTML;
+  console.log("xepLoai Before iF", xepLoai);
+
+  if (DTB >= 8.5) {
+    xepLoai = "Giỏi";
+  } else if (DTB >= 6.5) {
+    xepLoai = "Khá";
+  } else if (DTB >= 5) {
+    xepLoai = "Trung Bình";
+  } else {
+    xepLoai = "Yếu";
+  }
+
+  console.log("xepLoai after if", xepLoai);
+
+  // B3: xuất kết quả ra màn hình.
+  document.getElementById("resultXepLoai").innerHTML = `
+    <p class="bg-danger">Họ tên: ${hoTen}</p>
+    <p>DTB: ${DTB}</p>
+    <p>Xếp loại: ${xepLoai}</p>
+  `;
+};
+
+var ganGiaTri = (document.getElementById("ganGiaTri").value = "8");
+console.log("ganGiaTri", ganGiaTri);
+
+// document.getElementById("readNumber").onclick = function () {
+//   var number = +document.getElementById("number").value;
+//   var html;
+//   if (number === 1) {
+//     html = "Số một";
+//   } else if (number === 2) {
+//     html = "Số hai";
+//   } else if (number === 3) {
+//     html = "Số ba";
+//   } else if (number === 4) {
+//     html = "Số bốn";
+//   } else {
+//     html = "Vui lòng nhập từ 1 tới 4";
+//   }
+
+//   document.getElementById("resultReadNumber").innerHTML = html;
+// };
+
+// switch case chỉ sử dụng với so sánh bằng và biết trước những trường hợp sẽ xảy ra
+// switch(gía trị truyền vào để so sánh) {
+//   case tencase:
+//     Nội dung xử lý khi case thỏa điều kiện;
+//     break;
+//   case tencase:
+//     Nội dung xử lý khi case thỏa điều kiện;
+//     break;
+//     .
+//     .
+//   default:
+//     nội dung xử lý khi những case trên không thỏa điều kiện - tương ứng với else cuối cùng trong if eles
+// }
+// sau mỗi case phải có break
+// break có tác dụng thoát khỏi swicth khi thỏa điều kiện
+
+document.getElementById("readNumber").onclick = function () {
+  var number = +document.getElementById("number").value;
+  var html;
+
+  switch (number) {
+    case 1:
+      html = "số một";
+    // break;
+    case 2:
+      html = "Số hai";
+    // break;
+    case 3:
+      html = "Số ba";
+    // break;
+    case 4:
+      html = "Số bốn";
+    // break;
+    default:
+      html = "Vui lòng nhập từ 1 tới 4";
+  }
+
+  document.getElementById("resultReadNumber").innerHTML = html;
+};
+
+// so sánh khoảng như bài giỏ hàng sử dụng switch case đc ko?
+// 0: ko
+// 1: đc
+
+document.getElementById("dayOfMonth").onclick = function () {
+  var month = +document.getElementById("month").value;
+  var dayOfMonth;
+  switch (month) {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 12:
+      dayOfMonth = 31;
+      break;
+    case 2:
+      dayOfMonth = 28;
+      break;
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+      dayOfMonth = 30;
+      break;
+    default:
+      dayOfMonth = 30;
+      break;
+  }
+
+  document.getElementById("resultMonth").innerHTML = dayOfMonth;
+};
